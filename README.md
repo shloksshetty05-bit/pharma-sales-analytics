@@ -94,8 +94,6 @@ pharma-sales-analytics/
 │   └── chart_weekday_sales.png     # Weekday sales distribution chart
 │
 ├── README.md                       # Main project documentation
-├── INTERVIEW_PREPARATION.md        # Detailed interview guide, pitches & Q&A
-├── INTERVIEW_CHEATSHEET.md         # Pre-interview quick revision cheat sheet
 └── .gitignore                      # Git ignore file
 ```
 
