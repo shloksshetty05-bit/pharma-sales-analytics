@@ -1,6 +1,6 @@
 # Pharmaceutical Sales Analytics
 
-A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python exploratory data analysis (EDA)**, and an interactive **Power BI analytics dashboard report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`)**.
+A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python exploratory data analysis (EDA)**, and a **Power BI analytics dashboard blueprint**.
 
 ---
 
@@ -8,7 +8,7 @@ A comprehensive data analytics project examining 5.5 years of daily pharmaceutic
 
 ![Power BI Dashboard Overview](screenshots/powerbi_dashboard_overview.png)
 
-The Power BI report file [`powerbi/Pharmaceutical_Sales_Analytics.pbix`](powerbi/Pharmaceutical_Sales_Analytics.pbix) features an interactive dashboard built on a Star Schema data model:
+The Power BI dashboard design blueprint features an interactive canvas built on a Star Schema data model:
 - **KPI Row**: Displays Total Sales Volume (`127,595.50` units), Top Bestseller (`N02BE` - 49.38% share of total sales volume), Average Daily Sales (`60.59` units/day), and Total Days Analyzed (`2,106` days).
 - **Monthly Sales Unit Trend**: Line chart visualizing 5.5 years of monthly sales, highlighting winter disease surges with explicit partial month annotation for October 2019 (data available through Oct 8).
 - **Category Volume Column Chart**: Compares overall unit volume across 8 ATC drug categories.
@@ -20,10 +20,9 @@ The Power BI report file [`powerbi/Pharmaceutical_Sales_Analytics.pbix`](powerbi
 ## Technical Authenticity & Architecture
 
 To maintain complete technical transparency and defensibility:
-- **Power BI Desktop Report File**: Saved as [`powerbi/Pharmaceutical_Sales_Analytics.pbix`](powerbi/Pharmaceutical_Sales_Analytics.pbix) containing the complete tabular model schema (`Fact_PharmaSales`, `Dim_Date`, `Dim_Category`), relationships, and DAX measures.
 - **Python Exploratory Data Analysis & Visualization**: Executed via [`python/pharma_data_analysis.py`](python/pharma_data_analysis.py), which processes raw daily records, unpivots category metrics, and renders high-resolution analytical dashboard visualizations (`screenshots/dashboard_overview_python.png`).
 - **SQL Relational Database Modeling**: Database schema (`sql/01_schema_and_import.sql`), transformation unpivoting (`sql/02_data_cleaning.sql`), and analytical queries (`sql/03_analytical_queries.sql`) were authored and validated using standard ANSI SQL with **PostgreSQL** syntax (incorporating window functions `LAG()`, `RANK()`, `ROW_NUMBER()`, and `EXTRACT()`), with **SQLite** compatibility notes included.
-- **Power BI Data Model & DAX Specifications**: Provided in [`powerbi/dax_measures.dax`](powerbi/dax_measures.dax), [`powerbi/data_model_schema.md`](powerbi/data_model_schema.md), and [`powerbi/dashboard_layout_guide.md`](powerbi/dashboard_layout_guide.md).
+- **Power BI Data Model & DAX Specifications**: Provided in [`powerbi/dax_measures.dax`](powerbi/dax_measures.dax), [`powerbi/data_model_schema.md`](powerbi/data_model_schema.md), and [`powerbi/dashboard_layout_guide.md`](powerbi/dashboard_layout_guide.md) as a complete design blueprint for Power BI Desktop deployment.
 
 ---
 
@@ -100,7 +99,7 @@ A **0.79% variance (1,009.73 units)** was identified between the daily granular 
 - **Database & Querying**: SQL / PostgreSQL (`DDL`, `DML`, Unpivoting `UNION ALL`, `GROUP BY`, Window Functions `LAG()`, `RANK()`, `ROW_NUMBER()`)
 - **Data Processing & Scripting**: Python 3.10, `pandas`, `numpy`
 - **Exploratory Data Analysis & Visualization**: `matplotlib`, `seaborn`
-- **Business Intelligence**: Power BI Desktop Report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`), DAX Time Intelligence (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
+- **Business Intelligence**: Power BI Blueprint Specifications (`powerbi/dax_measures.dax`, `powerbi/data_model_schema.md`), DAX Time Intelligence (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
 
 ---
 
@@ -126,11 +125,9 @@ pharma-sales-analytics/
 │
 ├── python/
 │   ├── pharma_data_analysis.py     # Python data analysis & chart generator
-│   ├── data_verification.py        # Automated cross-tool reconciliation script
-│   └── compile_pbix.py             # Power BI Desktop report compiler script
+│   └── data_verification.py        # Automated cross-tool reconciliation script
 │
 ├── powerbi/
-│   ├── Pharmaceutical_Sales_Analytics.pbix  # Compiled Power BI Desktop report file
 │   ├── dax_measures.dax            # Complete DAX measures library
 │   ├── data_model_schema.md        # Star schema relationships & modeling guide
 │   └── dashboard_layout_guide.md   # Visual layout & canvas specifications
