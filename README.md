@@ -4,11 +4,16 @@ A comprehensive data analytics project examining 5.5 years of daily pharmaceutic
 
 ---
 
-## Project Overview
+## Power BI Dashboard Overview
 
-Pharmaceutical distributors and pharmacy managers require data-driven visibility into medication demand patterns to optimize inventory procurement, prevent stockouts during seasonal disease spikes, and streamline supply chain operations. 
+![Power BI Dashboard Overview](screenshots/powerbi_dashboard_overview.png)
 
-This project analyzes daily sales transactions across 8 therapeutic drug groups between January 2014 and October 2019 to identify seasonality trends, weekday buying behaviors, YoY growth dynamics, and category sales contributions.
+The Power BI report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`) features an interactive dashboard built on a Star Schema data model:
+- **KPI Row**: Displays Total Sales Volume (`127,595.50` units), Top Bestseller (`N02BE` - 49.38% share), Average Daily Sales (`60.59` units/day), and Total Days Analyzed (`2,106` days).
+- **Monthly Sales Unit Trend**: Line chart visualizing 5.5 years of monthly sales, highlighting winter disease surges.
+- **Category Volume Column Chart**: Compares overall unit volume across 8 ATC drug categories.
+- **Weekday Sales Distribution**: Horizontal bar chart tracking demand from Monday through Sunday (Saturday peak volume).
+- **Performance Matrix Table**: Drilldown matrix by Drug Category, Year, and Market Share.
 
 ---
 
@@ -89,9 +94,12 @@ pharma-sales-analytics/
 │   └── dashboard_layout_guide.md   # Visual layout & canvas specifications
 │
 ├── screenshots/
-│   ├── chart_category_sales.png    # Sales quantity by category visualization
-│   ├── chart_monthly_trend.png     # Monthly trend visualization
-│   └── chart_weekday_sales.png     # Weekday sales distribution chart
+│   ├── powerbi_dashboard_overview.png # Main Power BI Dashboard visualization
+│   ├── powerbi_sales_analysis.png     # Power BI Time/Category sales visualization
+│   ├── powerbi_detailed_analysis.png  # Detailed visual dashboard breakdown
+│   ├── chart_category_sales.png       # Python category sales volume chart
+│   ├── chart_monthly_trend.png        # Python monthly sales trend chart
+│   └── chart_weekday_sales.png        # Python weekday sales distribution chart
 │
 ├── README.md                       # Main project documentation
 └── .gitignore                      # Git ignore file
@@ -125,19 +133,3 @@ pharma-sales-analytics/
 2. **Weekend Staffing Optimization**: Increase pharmacy fulfillment and retail sales staffing on Saturdays and Sundays, when transaction volume peaks by ~15% compared to mid-week days (Thursday low of 17,212 units).
 3. **Targeted Respiratory Promotion**: Align respiratory drug (`R03` / `R06`) promotions and inventory stock-ups with spring allergy (March/April) and autumn respiratory illness seasons.
 4. **Slow-Moving Inventory Management**: `N05C` (Hypnotics & Sedatives) accounts for under 1% of total sales (1,249.96 units over 5.5 years). Transition `N05C` procurement to on-demand ordering to minimize holding costs and expiration write-offs.
-
----
-
-## Project Limitations
-
-- **Pricing Data Absence**: Dataset contains sales quantities (unit counts) but lacks unit prices and profit margins. Consequently, financial revenue and margin analysis cannot be directly computed.
-- **Geographic Scope**: Dataset lacks store-level or regional location metadata, preventing geographic spatial analysis.
-- **Partial Year 2019**: Data for 2019 concludes on October 8, 2019, rendering 2019 full-year comparison incomplete.
-
----
-
-## Future Improvements
-
-- Incorporate unit cost and retail price fields to analyze gross profit margins and product profitability.
-- Build predictive time-series forecasting models (ARIMA / Prophet in Python) to forecast category-level monthly demand.
-- Integrate store-location dimension tables to enable spatial region-wise sales benchmarking.
