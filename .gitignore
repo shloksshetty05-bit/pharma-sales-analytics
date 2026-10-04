@@ -12,6 +12,8 @@ ENV/
 # Data temporary files
 *.tmp
 *.log
+*.exe
+PBIDesktopSetup_x64.exe
 
 # OS generated files
 .DS_Store
