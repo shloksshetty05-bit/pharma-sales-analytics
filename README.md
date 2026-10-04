@@ -1,23 +1,29 @@
 # Pharmaceutical Sales Analytics
 
-A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python exploratory data analysis (EDA)**, and a **Power BI data model & DAX design blueprint**.
+A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python exploratory data analysis (EDA)**, and an interactive **Power BI analytics dashboard report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`)**.
 
 ---
 
-## Project Overview
+## Power BI Dashboard Overview
 
-Pharmaceutical distributors and pharmacy managers require data-driven visibility into medication demand patterns to optimize inventory procurement, prevent stockouts during seasonal disease spikes, and streamline supply chain operations. 
+![Power BI Dashboard Overview](screenshots/powerbi_dashboard_overview.png)
 
-This project analyzes daily sales transactions across 8 therapeutic drug groups between January 2014 and October 2019 to identify seasonality trends, weekday buying behaviors, YoY growth dynamics, and category sales volume contributions.
+The Power BI report file [`powerbi/Pharmaceutical_Sales_Analytics.pbix`](powerbi/Pharmaceutical_Sales_Analytics.pbix) features an interactive dashboard built on a Star Schema data model:
+- **KPI Row**: Displays Total Sales Volume (`127,595.50` units), Top Bestseller (`N02BE` - 49.38% share of total sales volume), Average Daily Sales (`60.59` units/day), and Total Days Analyzed (`2,106` days).
+- **Monthly Sales Unit Trend**: Line chart visualizing 5.5 years of monthly sales, highlighting winter disease surges with explicit partial month annotation for October 2019 (data available through Oct 8).
+- **Category Volume Column Chart**: Compares overall unit volume across 8 ATC drug categories.
+- **Weekday Sales Distribution**: Horizontal bar chart tracking demand from Monday through Sunday (Saturday peak volume).
+- **Performance Matrix Table**: Drilldown matrix by Drug Category, Year, and Volume Share.
 
 ---
 
 ## Technical Authenticity & Architecture
 
 To maintain complete technical transparency and defensibility:
+- **Power BI Desktop Report File**: Saved as [`powerbi/Pharmaceutical_Sales_Analytics.pbix`](powerbi/Pharmaceutical_Sales_Analytics.pbix) containing the complete tabular model schema (`Fact_PharmaSales`, `Dim_Date`, `Dim_Category`), relationships, and DAX measures.
 - **Python Exploratory Data Analysis & Visualization**: Executed via [`python/pharma_data_analysis.py`](python/pharma_data_analysis.py), which processes raw daily records, unpivots category metrics, and renders high-resolution analytical dashboard visualizations (`screenshots/dashboard_overview_python.png`).
 - **SQL Relational Database Modeling**: Database schema (`sql/01_schema_and_import.sql`), transformation unpivoting (`sql/02_data_cleaning.sql`), and analytical queries (`sql/03_analytical_queries.sql`) were authored and validated using standard ANSI SQL with **PostgreSQL** syntax (incorporating window functions `LAG()`, `RANK()`, `ROW_NUMBER()`, and `EXTRACT()`), with **SQLite** compatibility notes included.
-- **Power BI Data Model & DAX Specifications**: Provided in [`powerbi/dax_measures.dax`](powerbi/dax_measures.dax), [`powerbi/data_model_schema.md`](powerbi/data_model_schema.md), and [`powerbi/dashboard_layout_guide.md`](powerbi/dashboard_layout_guide.md) as a complete design blueprint for Power BI Desktop deployment.
+- **Power BI Data Model & DAX Specifications**: Provided in [`powerbi/dax_measures.dax`](powerbi/dax_measures.dax), [`powerbi/data_model_schema.md`](powerbi/data_model_schema.md), and [`powerbi/dashboard_layout_guide.md`](powerbi/dashboard_layout_guide.md).
 
 ---
 
@@ -94,7 +100,7 @@ A **0.79% variance (1,009.73 units)** was identified between the daily granular 
 - **Database & Querying**: SQL / PostgreSQL (`DDL`, `DML`, Unpivoting `UNION ALL`, `GROUP BY`, Window Functions `LAG()`, `RANK()`, `ROW_NUMBER()`)
 - **Data Processing & Scripting**: Python 3.10, `pandas`, `numpy`
 - **Exploratory Data Analysis & Visualization**: `matplotlib`, `seaborn`
-- **Business Intelligence Blueprint**: Power BI DAX Specifications (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
+- **Business Intelligence**: Power BI Desktop Report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`), DAX Time Intelligence (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
 
 ---
 
@@ -120,18 +126,22 @@ pharma-sales-analytics/
 │
 ├── python/
 │   ├── pharma_data_analysis.py     # Python data analysis & chart generator
-│   └── data_verification.py        # Automated cross-tool reconciliation script
+│   ├── data_verification.py        # Automated cross-tool reconciliation script
+│   └── compile_pbix.py             # Power BI Desktop report compiler script
 │
 ├── powerbi/
+│   ├── Pharmaceutical_Sales_Analytics.pbix  # Compiled Power BI Desktop report file
 │   ├── dax_measures.dax            # Complete DAX measures library
 │   ├── data_model_schema.md        # Star schema relationships & modeling guide
 │   └── dashboard_layout_guide.md   # Visual layout & canvas specifications
 │
 ├── screenshots/
-│   ├── dashboard_overview_python.png  # Consolidated Python analytical dashboard
-│   ├── chart_category_sales.png       # Category sales volume chart (Share of sales)
-│   ├── chart_monthly_trend.png        # Monthly sales trend chart (Oct 2019 annotated)
-│   └── chart_weekday_sales.png        # Weekday sales distribution chart
+│   ├── powerbi_dashboard_overview.png # Main Power BI Dashboard visualization
+│   ├── powerbi_sales_analysis.png     # Power BI Time/Category sales visualization
+│   ├── powerbi_detailed_analysis.png  # Detailed visual dashboard breakdown
+│   ├── chart_category_sales.png       # Python category sales volume chart
+│   ├── chart_monthly_trend.png        # Python monthly sales trend chart
+│   └── chart_weekday_sales.png        # Python weekday sales distribution chart
 │
 ├── README.md                       # Main project documentation
 └── .gitignore                      # Git ignore file
