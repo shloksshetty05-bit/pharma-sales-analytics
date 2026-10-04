@@ -1,0 +1,124 @@
+/* ===============================================================================
+   PHARMACEUTICAL SALES ANALYTICS - POWER BI DAX MEASURES LIBRARY
+   ===============================================================================
+   Author: Portfolio Student Data Analyst
+   Description: Complete collection of DAX measures used in the Power BI dashboard,
+                organized by core KPI, Time Intelligence, and Category metrics.
+   =============================================================================== */
+
+-- -------------------------------------------------------------------------------
+-- 1. CORE KPI MEASURES
+-- -------------------------------------------------------------------------------
+
+// Measure 1: Total Units Sold
+// Calculates total sum of drug units sold across selected filters.
+Total Units Sold = 
+SUM(Fact_PharmaSales[Quantity])
+
+// Measure 2: Average Daily Sales
+// Calculates the average units sold per calendar day.
+Average Daily Sales = 
+AVERAGE(Fact_PharmaSales[Quantity])
+
+// Measure 3: Total Days Analyzed
+// Counts the number of distinct days present in the current filter context.
+Total Days Analyzed = 
+DISTINCTCOUNT(Fact_PharmaSales[Date])
+
+// Measure 4: Total Orders / Transaction Count
+// Counts total records (rows) in the fact table.
+Total Record Count = 
+COUNTROWS(Fact_PharmaSales)
+
+
+-- -------------------------------------------------------------------------------
+-- 2. CATEGORY & MARKET SHARE MEASURES
+-- -------------------------------------------------------------------------------
+
+// Measure 5: Sales % Contribution of All Categories
+// Computes percentage share of a specific category relative to total portfolio sales.
+Sales % Contribution = 
+DIVIDE(
+    [Total Units Sold],
+    CALCULATE([Total Units Sold], ALL(Dim_Category)),
+    0
+)
+
+// Measure 6: Top Selling Category Name
+// Dynamically returns the name of the drug category with the highest sales volume.
+Top Selling Category = 
+CALCULATE(
+    FIRSTNONBLANK(Dim_Category[Category_Name], 1),
+    TOPN(1, ALL(Dim_Category), [Total Units Sold], DESC)
+)
+
+// Measure 7: Top Category Sales Volume
+// Calculates the total sales units of the #1 bestseller drug category.
+Top Category Sales Volume = 
+MAXX(
+    ALL(Dim_Category[Category_Name]),
+    [Total Units Sold]
+)
+
+
+-- -------------------------------------------------------------------------------
+-- 3. TIME INTELLIGENCE & COMPARISON MEASURES
+-- -------------------------------------------------------------------------------
+
+// Measure 8: Year-to-Date (YTD) Sales
+// Calculates cumulative sales from the beginning of the year to the selected date.
+YTD Sales = 
+TOTALYTD(
+    [Total Units Sold],
+    Dim_Date[Date]
+)
+
+// Measure 9: Prior Year Sales (Same Period Last Year)
+// Calculates sales for the exact corresponding period in the prior year.
+Prior Year Sales = 
+CALCULATE(
+    [Total Units Sold],
+    SAMEPERIODLASTYEAR(Dim_Date[Date])
+)
+
+// Measure 10: Year-over-Year (YoY) Sales Variance
+// Absolute difference between current period sales and prior year sales.
+YoY Sales Variance = 
+[Total Units Sold] - [Prior Year Sales]
+
+// Measure 11: Year-over-Year (YoY) Growth %
+// Percentage growth compared to the prior year.
+YoY Growth % = 
+DIVIDE(
+    [YoY Sales Variance],
+    [Prior Year Sales],
+    0
+)
+
+// Measure 12: Month-over-Month (MoM) Growth %
+// Calculates sales growth percentage compared to the previous month.
+MoM Growth % = 
+VAR PreviousMonthSales = 
+    CALCULATE(
+        [Total Units Sold],
+        DATEADD(Dim_Date[Date], -1, MONTH)
+    )
+RETURN
+    DIVIDE(
+        [Total Units Sold] - PreviousMonthSales,
+        PreviousMonthSales,
+        0
+    )
+
+
+-- -------------------------------------------------------------------------------
+-- 4. CONDITIONAL FORMATTING & DYNAMIC TITLE MEASURES
+-- -------------------------------------------------------------------------------
+
+// Measure 13: Dynamic Dashboard Header Title
+// Updates header dynamically based on selected slicer values.
+Dynamic Title = 
+VAR SelectedYear = SELECTEDVALUE(Dim_Date[Year], "All Years")
+VAR SelectedCategory = SELECTEDVALUE(Dim_Category[Category_Name], "All Drug Categories")
+RETURN
+    "Pharma Sales Performance | " & SelectedCategory & " (" & SelectedYear & ")"
