@@ -1,28 +1,32 @@
 # Pharmaceutical Sales Analytics
 
-A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python data processing & exploratory data analysis (EDA)**, and an interactive **Power BI analytics dashboard**.
+A comprehensive data analytics project examining 5.5 years of daily pharmaceutical sales data (2,106 calendar days, 127,595.50 units sold) across 8 Anatomical Therapeutic Chemical (ATC) drug categories. This repository demonstrates end-to-end data analysis workflows encompassing **Excel data cleaning**, **SQL relational modeling & querying**, **Python exploratory data analysis (EDA)**, and a **Power BI data model & DAX design blueprint**.
 
 ---
 
-## Power BI Dashboard Overview
+## Project Overview
 
-![Power BI Dashboard Overview](screenshots/powerbi_dashboard_overview.png)
+Pharmaceutical distributors and pharmacy managers require data-driven visibility into medication demand patterns to optimize inventory procurement, prevent stockouts during seasonal disease spikes, and streamline supply chain operations. 
 
-The Power BI report (`powerbi/Pharmaceutical_Sales_Analytics.pbix`) features an interactive dashboard built on a Star Schema data model:
-- **KPI Row**: Displays Total Sales Volume (`127,595.50` units), Top Bestseller (`N02BE` - 49.38% share), Average Daily Sales (`60.59` units/day), and Total Days Analyzed (`2,106` days).
-- **Monthly Sales Unit Trend**: Line chart visualizing 5.5 years of monthly sales, highlighting winter disease surges.
-- **Category Volume Column Chart**: Compares overall unit volume across 8 ATC drug categories.
-- **Weekday Sales Distribution**: Horizontal bar chart tracking demand from Monday through Sunday (Saturday peak volume).
-- **Performance Matrix Table**: Drilldown matrix by Drug Category, Year, and Market Share.
+This project analyzes daily sales transactions across 8 therapeutic drug groups between January 2014 and October 2019 to identify seasonality trends, weekday buying behaviors, YoY growth dynamics, and category sales volume contributions.
+
+---
+
+## Technical Authenticity & Architecture
+
+To maintain complete technical transparency and defensibility:
+- **Python Exploratory Data Analysis & Visualization**: Executed via [`python/pharma_data_analysis.py`](python/pharma_data_analysis.py), which processes raw daily records, unpivots category metrics, and renders high-resolution analytical dashboard visualizations (`screenshots/dashboard_overview_python.png`).
+- **SQL Relational Database Modeling**: Database schema (`sql/01_schema_and_import.sql`), transformation unpivoting (`sql/02_data_cleaning.sql`), and analytical queries (`sql/03_analytical_queries.sql`) were authored and validated using standard ANSI SQL with **PostgreSQL** syntax (incorporating window functions `LAG()`, `RANK()`, `ROW_NUMBER()`, and `EXTRACT()`), with **SQLite** compatibility notes included.
+- **Power BI Data Model & DAX Specifications**: Provided in [`powerbi/dax_measures.dax`](powerbi/dax_measures.dax), [`powerbi/data_model_schema.md`](powerbi/data_model_schema.md), and [`powerbi/dashboard_layout_guide.md`](powerbi/dashboard_layout_guide.md) as a complete design blueprint for Power BI Desktop deployment.
 
 ---
 
 ## Business Objectives
 
-1. **Category Demand Analysis**: Quantify total unit sales and market share across 8 distinct ATC drug categories to identify top-revenue drivers.
+1. **Category Demand Analysis**: Quantify total unit sales and volume share across 8 distinct ATC drug categories to identify top revenue drivers.
 2. **Seasonality & Trend Identification**: Analyze monthly and annual sales patterns to pinpoint peak consumption periods (e.g., flu season vs. summer months).
 3. **Purchasing Behavior Mapping**: Evaluate day-of-week demand trends to optimize pharmacy staffing and delivery schedules.
-4. **Cross-Tool Data Reconciliation**: Establish single-source-of-truth data governance ensuring 100% calculation parity across Excel, SQL, Python, and Power BI DAX metrics.
+4. **Cross-Tool Data Reconciliation**: Establish single-source-of-truth data governance ensuring calculation parity across Excel, SQL, Python, and Power BI metrics.
 
 ---
 
@@ -54,13 +58,43 @@ The dataset comprises daily sales transactions recorded across 6 consecutive yea
 
 ---
 
+## Data Reconciliation & Quality
+
+A **0.79% variance (1,009.73 units)** was identified between the daily granular dataset (`127,595.50` units across 2,106 days) and the pre-aggregated monthly summary dataset (`126,585.77` units). Investigation traced the difference to partial-month truncation in October 2019, where daily records were available only through **8 October 2019** (`1,009.73` units logged over 8 days). The daily granular dataset was therefore established as the single analytical source of truth across all tools.
+
+---
+
+## Analytical Dashboard Visualizations & Decision Captions
+
+### Figure 1: Analytical Dashboard Overview
+![Python Analytical Dashboard](screenshots/dashboard_overview_python.png)
+- **Insight**: Multi-panel analytical dashboard synthesizing category sales volume, monthly trends, weekday demand distribution, and annual totals.
+- **Decision Supported**: **Provides executive decision-makers with a single consolidated view to balance short-term staffing with long-term inventory buffer planning.**
+
+### Figure 2: Monthly Sales Unit Trend
+![Monthly Sales Unit Trend](screenshots/chart_monthly_trend.png)
+- **Insight**: Sales surge significantly during winter months (Jan: 13,971 units, Oct: 12,051 units) with an annotated partial-month drop in October 2019 (data available through Oct 8 only).
+- **Decision Supported**: **Winter demand surge → Supports seasonal safety-stock buffering starting in September to prevent cold/flu medication stockouts.**
+
+### Figure 3: Category Sales Volume Share
+![Category Sales Volume](screenshots/chart_category_sales.png)
+- **Insight**: `N02BE` (Paracetamol / Anilides) accounts for 49.38% share of total sales volume (63,005.40 units), followed by `N05B` (14.61%) and `R03` (9.10%).
+- **Decision Supported**: **High N02BE volume concentration → Supports priority inventory procurement and warehouse stocking for high-demand analgesics.**
+
+### Figure 4: Day-of-Week Sales Distribution
+![Weekday Sales Distribution](screenshots/chart_weekday_sales.png)
+- **Insight**: Saturday records the highest weekly sales volume (19,768 units, 15.49% weekly share), while Thursday records the lowest (17,212 units).
+- **Decision Supported**: **Saturday peak → Supports optimizing weekend pharmacy staffing and retail fulfillment schedules.**
+
+---
+
 ## Tools & Technology Stack
 
 - **Data Cleaning & Validation**: Excel (`SUMIFS`, `AVERAGEIFS`, `COUNTIF`, `XLOOKUP`, Pivot Tables)
 - **Database & Querying**: SQL / PostgreSQL (`DDL`, `DML`, Unpivoting `UNION ALL`, `GROUP BY`, Window Functions `LAG()`, `RANK()`, `ROW_NUMBER()`)
 - **Data Processing & Scripting**: Python 3.10, `pandas`, `numpy`
 - **Exploratory Data Analysis & Visualization**: `matplotlib`, `seaborn`
-- **Business Intelligence & Dashboarding**: Power BI Desktop, DAX Time Intelligence (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
+- **Business Intelligence Blueprint**: Power BI DAX Specifications (`TOTALYTD`, `SAMEPERIODLASTYEAR`, `DIVIDE`, Star Schema Modeling)
 
 ---
 
@@ -94,12 +128,10 @@ pharma-sales-analytics/
 │   └── dashboard_layout_guide.md   # Visual layout & canvas specifications
 │
 ├── screenshots/
-│   ├── powerbi_dashboard_overview.png # Main Power BI Dashboard visualization
-│   ├── powerbi_sales_analysis.png     # Power BI Time/Category sales visualization
-│   ├── powerbi_detailed_analysis.png  # Detailed visual dashboard breakdown
-│   ├── chart_category_sales.png       # Python category sales volume chart
-│   ├── chart_monthly_trend.png        # Python monthly sales trend chart
-│   └── chart_weekday_sales.png        # Python weekday sales distribution chart
+│   ├── dashboard_overview_python.png  # Consolidated Python analytical dashboard
+│   ├── chart_category_sales.png       # Category sales volume chart (Share of sales)
+│   ├── chart_monthly_trend.png        # Monthly sales trend chart (Oct 2019 annotated)
+│   └── chart_weekday_sales.png        # Weekday sales distribution chart
 │
 ├── README.md                       # Main project documentation
 └── .gitignore                      # Git ignore file
@@ -107,29 +139,18 @@ pharma-sales-analytics/
 
 ---
 
-## Data Cleaning Workflow
+## Key Analytical Insights & Decision Summary
 
-1. **Duplicate Verification**: Checked `datum` column for duplicates; verified 2,106 unique contiguous daily entries.
-2. **Null Value Inspection**: Scanned all numeric columns for missing values or NaN errors; verified 0 nulls exist.
-3. **Data Type Casting**: Transformed date text fields into ISO-8601 standard dates (`YYYY-MM-DD`).
-4. **Data Normalization (Unpivoting)**: Transformed 8 wide ATC category columns into normalized long fact rows (`Date`, `Category_Code`, `Quantity_Sold`), converting 2,106 wide rows into 16,848 normalized fact rows.
-5. **Reconciliation Audit**: Discovered that pre-aggregated `salesmonthly.csv` had a minor variance (126,585.77 units vs 127,595.50 units in `salesdaily.csv` - 0.79% variance). Designated `salesdaily.csv` as the official source of truth.
-
----
-
-## Key Analytical Insights
-
-1. **Bestseller Dominance**: `N02BE` (Paracetamol / Anilides) is the single largest category, accounting for **63,005.40 units** (**49.38%** of total pharmaceutical sales).
-2. **Secondary Categories**: `N05B` (Anxiolytics - 14.61%), `R03` (Respiratory Airway - 9.10%), and `M01AB` (Anti-Inflammatory Acetic - 8.31%) represent secondary revenue pillars.
-3. **Seasonal Peak Consumption**: Sales peak significantly during winter/autumn months — **January** (**13,970.69 units**) and **October** (**12,051.02 units**) — driven by surge demand for analgesics (`N02BE`) and respiratory products (`R03`). Summer months (June-August) experience lowest demand (~8,750–9,000 units/month).
-4. **Annual Peak Year**: **2016** recorded highest annual sales (**25,234.93 units**, **+10.91% YoY growth**), averaging 68.95 units/day.
-5. **Weekend Purchasing Behavior**: **Saturday** generates the highest sales volume (**19,767.59 units**, **15.49%** of weekly total), followed by Sunday (**18,401.44 units**), indicating strong weekend retail replenishment.
+1. **Bestseller Volume Share**: `N02BE` (Paracetamol / Anilides) generated **63,005.40 units** (**49.38% share of total sales volume**). *Decision: Prioritize supplier contracts and bulk warehouse allocation for N02BE.*
+2. **Slow-Moving Category**: `N05C` (Hypnotics & Sedatives) generated **1,249.96 units** (**0.98% share of total sales volume**). *Decision: Transition N05C to on-demand procurement to reduce holding costs.*
+3. **Winter Seasonality Surge**: Demand spikes in January (13,971 units) and October (12,051 units). *Decision: Initiate seasonal safety stock buildup starting in early September.*
+4. **Weekend Retail Peak**: Saturday represents the single highest sales volume day (19,768 units). *Decision: Align store labor shift scheduling with weekend customer footfall.*
+5. **Annual Peak Year**: 2016 recorded peak sales volume of **25,234.93 units** (+10.91% YoY growth). *Decision: Investigate marketing/promotional drivers behind 2016 growth to replicate success.*
 
 ---
 
-## Business Recommendations
+## Project Limitations & Future Scope
 
-1. **Paracetamol Stock Buffer**: Maintain a minimum safety stock buffer of +25% for `N02BE` (Paracetamol) starting in September to meet cold/flu demand surges through January.
-2. **Weekend Staffing Optimization**: Increase pharmacy fulfillment and retail sales staffing on Saturdays and Sundays, when transaction volume peaks by ~15% compared to mid-week days (Thursday low of 17,212 units).
-3. **Targeted Respiratory Promotion**: Align respiratory drug (`R03` / `R06`) promotions and inventory stock-ups with spring allergy (March/April) and autumn respiratory illness seasons.
-4. **Slow-Moving Inventory Management**: `N05C` (Hypnotics & Sedatives) accounts for under 1% of total sales (1,249.96 units over 5.5 years). Transition `N05C` procurement to on-demand ordering to minimize holding costs and expiration write-offs.
+- **Pricing & Profitability**: Dataset contains unit quantities but lacks unit prices and cost data. Financial margin analysis cannot be computed.
+- **Geographic Scope**: Dataset represents store-level aggregates without regional identifiers.
+- **Partial Year 2019**: Data concludes on October 8, 2019, rendering full-year 2019 comparison incomplete.

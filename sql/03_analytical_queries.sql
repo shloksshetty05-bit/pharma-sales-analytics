@@ -24,7 +24,7 @@ FROM (
 ) daily_totals;
 
 -- -------------------------------------------------------------------------------
--- QUERY 2: CATEGORY PERFORMANCE & MARKET SHARE
+-- QUERY 2: CATEGORY PERFORMANCE & share of total sales volume
 -- Business Question: Which drug categories drive the highest sales volume?
 -- -------------------------------------------------------------------------------
 SELECT 

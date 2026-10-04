@@ -32,7 +32,7 @@ COUNTROWS(Fact_PharmaSales)
 
 
 -- -------------------------------------------------------------------------------
--- 2. CATEGORY & MARKET SHARE MEASURES
+-- 2. CATEGORY & share of total sales volume MEASURES
 -- -------------------------------------------------------------------------------
 
 // Measure 5: Sales % Contribution of All Categories
